@@ -6,13 +6,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import Util.Util;
+
 
 public class Util {
 	
 	public static final int KG_MEASUREUNIT = 767;
-	
 	public static final int TRANSACTIONTYPE_EXPENSE_PRODUCTION = 5;
+	public static final long ROOM_STATUS_AVAILABLE=1;
 	
+	
+	public static int toInt(Object o) {
+		return  Integer.parseInt(o.toString());
+	}
+	
+	public static long toLong(Object o) {
+		
+		return Long.parseLong(o.toString());
+	}
 	
 	public static int resolveLimitv2(Map map) {
 		return (Integer.parseInt(map.get("page").toString())-1)*Integer.parseInt(map.get("xpage").toString());
@@ -46,6 +57,13 @@ public class Util {
 			map.put(fields[i], values[i]);
 		}
 		return map;
+	}
+	
+	public static void responsePaginatedv2(Map response,int total, Map params) {
+		response.put("total", total);
+		response.put("xpage", Util.toInt(params.get("xpage")));
+		response.put("page", Util.toInt(params.get("page")));
+		//return response;
 	}
 	
 }

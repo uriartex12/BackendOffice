@@ -24,12 +24,29 @@ public class servicioHabitacion implements IserviceHabitacion {
 			String fields[]= {"id","descripcion","numeroHabitacion","precio","estadoHabitacion","nivelId","tipoId"};
 			response.put("List", Util.loadListFromRepository(list, fields));	
 			
+			if (params.containsKey("page")) {
+				params.put("count", true);
+				List<Object[]> total = habitacionRepositorio.listarHabitacion(params);
+				Util.responsePaginatedv2(response, Integer.parseInt(total.get(0) + ""), params);
+			}
+			
 			return response;
 		}catch(Exception e) {
 			
 			throw new Exception(e.getMessage());
 		}
 	}
+	
+	public Map SaveHabitacion(Map params) throws Exception{
+		Map response = new HashMap();
+		try {
+			response= habitacionRepositorio.SaveHabitacion(params);
+		} catch (Exception e) {
+			response.put("error", e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+		return response;
+	}
 
-
+	
 }

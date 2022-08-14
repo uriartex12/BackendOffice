@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,11 @@ public class HabitacionControlador {
 		Map response=new HashMap();
 		try {
 			Map map = Util.parseParameterMap(request.getParameterMap());
-			map.put("Xpage",10);
+			map.put("count", false);
+			map.put("page", map.containsKey("page") ? map.get("page").toString() : 1);
+			map.put("xpage", map.containsKey("xpage")?map.get("xpage"):10);
+			int limit = Util.resolveLimitv2(map);
+			map.put("limit", limit);
 			response = serviciohabitacion.listarHabitacion(map);
 		}catch(Exception e) {
 			response.put("ERROR", e.getMessage());
@@ -43,5 +48,20 @@ public class HabitacionControlador {
 		}
 		return ResponseEntity.ok().body(response);
 	}
+
 	
+	@RequestMapping(value="/SaveHabitacion", method=RequestMethod.POST, consumes="application/json", produces={"application/json; charset=UTF-8","*/*;charset=UTF-8"})
+	public ResponseEntity<Map> SaveHabitacion(HttpServletRequest request, HttpServletResponse httpServletResponse, @RequestBody String jsonIn) throws IOException {
+		Map response= new HashMap();
+		JsonTransformer jsonTransformer = new JsonTransformerImplJackson();
+		try {
+			Map map = (Map) jsonTransformer.fromJSON(jsonIn, Map.class);
+			map.put("employedid", map.containsKey("employedid") ? map.get("employedid") :1);
+						response= serviciohabitacion.SaveHabitacion(map);
+			return ResponseEntity.ok().body(response);
+		}catch(Exception e) {
+			response.put("ERROR",e.getMessage());
+			return ResponseEntity.status(500).body(response);
+		}
+	}
 }

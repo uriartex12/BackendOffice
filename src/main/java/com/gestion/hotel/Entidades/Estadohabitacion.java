@@ -31,6 +31,11 @@ public class Estadohabitacion {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
+	
+	public Estadohabitacion(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

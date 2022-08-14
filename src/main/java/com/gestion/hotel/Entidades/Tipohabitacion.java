@@ -31,7 +31,12 @@ public class Tipohabitacion {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
-
+	
+	public Tipohabitacion(Long id) {
+		super();
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}

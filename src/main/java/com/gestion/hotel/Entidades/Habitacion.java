@@ -24,7 +24,7 @@ public class Habitacion {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
-	@Column(name = "precio", nullable = false, unique = true)
+	@Column(name = "precio", nullable = false)
 	private Float precio;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -43,9 +43,6 @@ public class Habitacion {
 
 	}
 	
-	public Habitacion(Long id) {
-		this.id = id;
-	}
 	
 	public Habitacion(Long id, String numeroHabitacion, String descripcion, Float precio,
 			Estadohabitacion estadohabitacion, Nivelhabitacion nivelpiso, Tipohabitacion tipohabitacion) {

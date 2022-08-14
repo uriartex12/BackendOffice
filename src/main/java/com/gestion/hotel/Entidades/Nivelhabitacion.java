@@ -28,6 +28,11 @@ public class Nivelhabitacion {
 		this.id = id;
 		this.nivel = nivel;
 	}
+	
+	public Nivelhabitacion(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
